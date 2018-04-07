@@ -1,5 +1,5 @@
 from flask import Flask,render_template,request
-from login_form_model import loginForm
+from login_form_model import loginForm,login_form
 from flask_sqlalchemy import SQLAlchemy
 import register
 
@@ -25,7 +25,7 @@ class user(db.Model):
 def hello_world():
     return render_template('index.html')
 
-@app.route('/login.html',methods=['POST','GET'])
+@app.route('/register.html',methods=['POST','GET'])
 def login():
     form = loginForm()
     if request.method=='GET':
@@ -35,7 +35,26 @@ def login():
         password=request.form.get('password')
         register.register(username,password,1)
         return '注册成功'
-
+@app.route('/login.html',methods=['POST','Get'])
+def login2():
+    form1=login_form()
+    if request.method=="GET":
+        return render_template('login.html',form1=form1)
+    elif form1.validate_on_submit():
+        username = request.form.get('user')
+        password = request.form.get('password')
+        cx=user.query.filter_by(name=username).first()
+        '''
+        测试用例
+        '''
+        #print(cx.password)
+        #print(username)
+        #登录验证
+        database_password=cx.password
+        if password==database_password:
+            return 'login seccess'
+        else:
+            return '密码错误！'
 if __name__ == '__main__':
     db.drop_all()
     db.create_all()

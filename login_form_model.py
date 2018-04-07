@@ -7,3 +7,8 @@ class loginForm(FlaskForm):
     password=PasswordField('密码：',validators=[DataRequired()])
     password2=PasswordField('重复密码：',validators=[DataRequired(),EqualTo('password','密码不一致')])
     submit=SubmitField('注册')
+
+class login_form(FlaskForm):
+    user=StringField('用户名：',validators=[DataRequired()])
+    password=PasswordField('密码：',validators=[DataRequired()])
+    submit=SubmitField('登录')
