@@ -55,6 +55,10 @@ def login2():
             return 'login seccess'
         else:
             return '密码错误！'
+
+@app.route('/dataanaltsis.html')
+def da():
+    return render_template('dataanaltsis.html')
 if __name__ == '__main__':
     db.drop_all()
     db.create_all()

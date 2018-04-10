@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>login</title>
+    {%  extends 'index.html' %}
 </head>
 <body>
+{% block content %}
 <form method="post">
     {{ form1.csrf_token() }}
     {{ form1.user.label }}{{ form1.user }}<br>
     {{ form1.password.label }}{{ form1.password }}<br>
     {{ form1.submit }}<br>
 </form>
+{% endblock %}
 </body>
 </html>
