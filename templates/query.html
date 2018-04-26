@@ -2,9 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>query</title>
 </head>
 <body>
-$END$
+{% extends 'index.html' %}
+{% block content %}
+<table>
+
+{% for foo in list %}
+<tr>
+    <td>{{ foo.password }}</td>
+    <td>{{ foo.id }}</td>
+</tr>
+{% endfor %}
+
+</table>
+{% endblock %}
 </body>
+
 </html>

@@ -2,9 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>edit</title>
 </head>
 <body>
-$END$
+    {% extends 'index.html' %}
+
+        {% block content %}
+            <form method="post">
+                {{ form.csrf_token() }}
+                {{ form.title.label }}{{ form.title }}<br>
+                {{ form.file_area.label }}{{ form.file_area }}<br>
+                {{ form.submit }}
+            </form>
+        {% endblock %}
 </body>
 </html>
