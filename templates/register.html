@@ -5,6 +5,8 @@
     <title>登录</title>
 </head>
 <body>
+{% extends 'index.html' %}
+{% block content %}
 <form method="post">
 {{ form.csrf_token() }}
 {{ form.user.label }}{{ form.user }} <br>
@@ -12,5 +14,6 @@
 {{ form.password2.label }}{{ form.password2 }} <br>
 {{ form.submit }} <br>
 </form>
+{% endblock %}
 </body>
 </html>

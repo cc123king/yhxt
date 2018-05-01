@@ -4,28 +4,116 @@
     <meta charset="UTF-8">
     <title>TD-SCDMA网络覆盖与干扰优化系统</title>
     <script src="{{url_for('static',filename='js/jquery-3.3.1.min.js')  }}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" href="{{url_for('static',filename='css/stylesheet.css')  }}" rel="stylesheet ">
 </head>
 <body>
-    <div class="">
-        <h1>TD-SCDMA网络覆盖与干扰优化系统</h1>
-    </div>
-    <div class="menu">
-       {% block content %} <a href="login.html">登录/注册</a>|<a href="dataanaltsis.html">数据处理</a>|<a href="query_form.html">搜索</a>
-           <p>zaqwsxcde</p>
-       {% endblock %}
-    </div>
 
-    <div>
-        <div>
+    {% block navbar %}
+        <div class="navbar navbar-inverse" role="navigation">
 
+        <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" data-toggle="collapse" data-target="navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">TD-SCDMA网络覆盖及干扰优化系统</a>
         </div>
-    </div>
-    <div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    {% if not session.user %}
+                    <li class="dropdown">
 
-    </div>
-    <div class="footer">
-        power by lijin
-    </div>
+
+                        <a href="/" class="dropdown-toggle" data-toggle="dropdown" >sign in/sign up</a>
+
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="login.html">sign in</a>
+                            </li>
+                            <li>
+                                <a href="register.html">sign up</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    {% else %}
+                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">{{ session.user }}</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/" id="signout">sign out</a> </li>
+                            <li><a href="#">shuxing</li>
+                        </ul>
+                        </li>
+                    {% endif %}
+                    <li class="dropdown">
+                    <a href="/" class="dropdown-toggle" data-toggle="dropdown">数据处理模块</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="dataanaltsis.html">数据处理</a>
+                                <a href="data_colection.html">数据收集</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </div>
+    {% endblock %}
+       {% block content %}
+           <div class="container">
+            <div class="row">
+            <div class="col-md-4 text-center" >
+                <h3>TD-SCDMA</h3>
+                <div>
+                    <p>TD-SCDMA是英文Time Division-Synchronous Code Division Multiple Access（时分同步码分多址） 的简称，中国提出的第三代移动通信标准(简称3G)，也是ITU批准的三个3G标准中的一个，以我国知识产权为主的、被国际上广泛接受和认可的无线通信国际标准。是我国电信史上重要的里程碑。(相对于另两个主要3G标准CDMA2000和WCDMA，它的起步较晚，技术不够成熟。）虽然经过了这几年的发展，但是依然有很多可优化的地方。</p>
+                </div>
+                <a class="btn btn-info" href="#">查看更多</a>
+
+            </div>
+                <div class="col-md-8 text-center">
+                    <h3>通信干扰</h3>
+                    <div>
+                        <p>dsaf</p>
+                    </div>
+                    <a class="btn btn-info">查看更多</a>
+                </div>
+            </div>
+           <div class="row text-center">
+               <p>sdfad</p>
+           </div>
+           </div>
+
+          {% endblock %}
+
+{% block footer %}
+    <footer>
+        <div class="container">
+            power by Lijin
+        </div>
+
+    </footer>
+
+    {% endblock %}
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% block script %}
+    <script>
+
+       $('a#signout').bind('click',function () {
+           $.post('/login_out',function () {
+                         });
+
+       }) ;
+</script>
+{% endblock %}
 </body>
 </html>

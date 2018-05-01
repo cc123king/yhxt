@@ -1,14 +1,16 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,session
 from login_form_model import loginForm,login_form,query_model_form,file_model
 from flask_sqlalchemy import SQLAlchemy
-import register,query
+import register,query,time,yzm
 from edit import edits
+from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 app.secret_key='a1q1z1-s2w2x2-d3e33c3'
-app.config['SQLALCHEMY_DATABASE_URI']='mysql://root:15370040.lJ@127.0.0.1/test'
+app.config['SQLALCHEMY_DATABASE_URI']='mysql://king:15370040@127.0.0.1/test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 db=SQLAlchemy(app)
+bootstrap=Bootstrap(app)
 
 class role(db.Model):
     __tablename__='roles'
@@ -45,22 +47,39 @@ def login():
 def login2():
     form1=login_form()
     if request.method=="GET":
-        return render_template('login.html',form1=form1)
-    elif form1.validate_on_submit():
-        username = request.form.get('user')
-        password = request.form.get('password')
-        cx=user.query.filter_by(name=username).first()
-        '''
-        测试用例
-        '''
-        #print(cx.password)
-        #print(username)
-        #登录验证
-        database_password=cx.password
-        if password==database_password:
-            return 'login seccess'
+        return render_template('login.html',form1=form1,val1=time.time())
+    else:
+        if form1.validate_on_submit():
+            global list1
+            str1=''.join(list1)
+            str2=request.form.get('yzm')
+            if not str1.lower()==str2.lower():
+                list1=yzm.draw()
+                form1=login_form()
+                return render_template('login.html',form1=form1,val1=time.time())
+
+
+
+            else:
+                username = request.form.get('user')
+                password = request.form.get('password')
+                cx=user.query.filter_by(name=username).first()
+                '''
+                测试用例
+                '''
+                #print(cx.password)
+                #print(username)
+                #登录验证
+                database_password=cx.password
+                if password==database_password:
+                    list1=yzm.draw()
+                    session['user']=username
+                    return render_template('index.html')
+                else:
+                    list1=yzm.draw()
+                    return '密码错误！'
         else:
-            return '密码错误！'
+            return "不能为空"
 @app.route('/query_form.html',methods=['GET','POST'])
 def query_f():
     if request.method=='GET':
@@ -81,7 +100,10 @@ def query():
 @app.route('/dataanaltsis.html')
 def da():
     return render_template('dataanaltsis.html')
-
+@app.route('/login_out',methods=['POST'])
+def login_out():
+    session.pop('user',None)
+    return render_template('index.html')
 @app.route('/edit.html',methods=['GET','POST'])
 def edit():
     if request.method=='GET':
@@ -94,9 +116,14 @@ def edit():
         edits(title,file)
         return render_template('index.html')
 
+@app.route('/flushpicture')
+def flush_picture():
+    global list1
+    list1=yzm.draw()
 if __name__ == '__main__':
     db.drop_all()
     db.create_all()
+    list1=yzm.draw()
     role1=role(id=1,name='admin')
     role2=role(id=2,name='pt')
     db.session.add(role1)
