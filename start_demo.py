@@ -1,8 +1,9 @@
-from flask import Flask,render_template,request,session
+from flask import Flask,render_template,request,session,redirect,url_for
 from login_form_model import loginForm,login_form,query_model_form,file_model
 from flask_sqlalchemy import SQLAlchemy
 import register,query,time,yzm
 from edit import edits
+import json
 from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
@@ -120,6 +121,17 @@ def edit():
 def flush_picture():
     global list1
     list1=yzm.draw()
+
+@app.route('/search',methods=['POST'])
+def search():
+    data=request.form.get('keyword')
+
+    print(data)
+    return render_template('search.html')
+@app.route('/search_page',methods=['POST','GET'])
+def search_page():
+    return render_template('search.html')
+
 if __name__ == '__main__':
     db.drop_all()
     db.create_all()
