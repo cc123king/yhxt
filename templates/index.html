@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>TD-SCDMA网络覆盖与干扰优化系统</title>
+    {% block title %}<title>TD-SCDMA网络覆盖与干扰优化系统</title>{% endblock %}
     <script src="{{url_for('static',filename='js/jquery-3.3.1.min.js')  }}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
@@ -48,7 +48,7 @@
                     {% else %}
                         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">{{ session.user }}</a>
                         <ul class="dropdown-menu">
-                            <li><a href="/" id="signout">sign out</a> </li>
+                            <li><a  id="signout">sign out</a> </li>
                             <li><a href="#">shuxing</a></li>
                         </ul>
                         </li>
@@ -62,6 +62,12 @@
                             </li>
                         </ul>
                     </li>
+                <li class="dropdown"><a href="#" data-toggle="dropdown">管理模块</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="edit.html">内容编辑</a> </li>
+                        <li> <a href="#">页面编辑</a> </li>
+                    </ul>
+                </li>
                 <li>
                     <div class="input-group" style="margin-top: 3%" >
                         <input type="text" id="searchinput" class="form-control">
@@ -113,13 +119,21 @@
     {% endblock %}
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-{% block script %}
+    
+    {% block script %}
     <script>
 
        $('a#signout').bind('click',function () {
-           $.post('/login_out',function () {
-                         });
+           $.post('/login_out',function (res) {
+              if(res=='OK'){
+                  location.href='/'
+              }
+              else {
+                alert('注销失败')
+              }
+           });
 
        }) ;
 

@@ -6,44 +6,8 @@
 </head>
 <body>
 {% extends 'index.html' %}
-
 {% block content %}
-<div class="">
-    <a href="#">数据收集模块</a>
-</div>
-{% block content %}
-    <script>
 
-        $(function(){
-            $('a#flushpicture').bind('click',function () {
-                $.getJSON($SCRIPT_ROOT+'/flushpicture',{},function () {
-
-                })
-            });
-            }
-        );
-    </script>
-<form method="post" id="passclass">
-<div class="container-fluid">
-<div class="row text-center">
-    {{ form1.csrf_token() }}
-    {{ form1.user.label }}{{ form1.user }}<br>
-</div>
-    <div class="row text-center">
-        {{ form1.password.label }}{{ form1.password }}<br></div>
-    <div class="row text-center">
-    {{ form1.yzm.label }}<img id="yzm" src="{{ url_for('static',filename='picture/yzm.jpg',_t=val1) }}"><a href="login.html"  id="flushpicture">刷新图片</a><br>
-    </div>
-    <div class="row text-center">
-        <b><label>请输入验证码：</label></b>{{ form1.yzm }}<br>
-    </div>
-    <div class="row text-center">   {{ form1.submit }}<br></div>
-</div></form>
-{% endblock %}
-
-    <div class="">
-        <a href="#">数据处理模块</a>
-    </div>
 {% endblock %}
 </body>
 </html>

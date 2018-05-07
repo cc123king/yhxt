@@ -25,7 +25,7 @@ class text(db.Model):
 
 class user(db.Model):
     __tablename__='users'
-    id=db.Column(db.Integer,primary_key=True)
+    id=db.Column(db.Integer,primary_key=True,autoincrement=True)
     name=db.Column(db.String(16),unique=True)
     password=db.Column(db.String(20))
     role_id=db.Column(db.Integer,db.ForeignKey('roles.id'))
@@ -42,7 +42,7 @@ def login():
     elif form.validate_on_submit():
         username=request.form.get('user')
         password=request.form.get('password')
-        register.register(username,password,1)
+        register.register(username,password,2)
         return '注册成功'
 @app.route('/login.html',methods=['POST','Get'])
 def login2():
@@ -104,7 +104,10 @@ def da():
 @app.route('/login_out',methods=['POST'])
 def login_out():
     session.pop('user',None)
-    return render_template('index.html')
+    if session.get('user') ==None:
+        return 'OK'
+    else:
+        return 'error'
 @app.route('/edit.html',methods=['GET','POST'])
 def edit():
     if request.method=='GET':
@@ -116,7 +119,9 @@ def edit():
         #print(file)
         edits(title,file)
         return render_template('index.html')
-
+@app.route('/data_colection.html')
+def data_colection():
+    return render_template('data_colection.html')
 @app.route('/flushpicture')
 def flush_picture():
     global list1
@@ -128,10 +133,20 @@ def search():
 
     print(data)
     return render_template('search.html')
+@app.route('/admin_login',methods=['POST','GET'])
+def admin_login():
+    if request.method=='GET':
+        return render_template('admin_login_page.html')
+    else:
+        users=request.form.get('users')
+        print(users)
+        return 'OK'
 @app.route('/search_page',methods=['POST','GET'])
 def search_page():
     return render_template('search.html')
-
+@app.route('/admin')
+def admin():
+    return render_template('admin_manager.html')
 if __name__ == '__main__':
     db.drop_all()
     db.create_all()
@@ -141,4 +156,7 @@ if __name__ == '__main__':
     db.session.add(role1)
     db.session.add(role2)
     db.session.commit()
-    app.run(debug=True)
+    user1 = user(name='admin', password='admin', role_id=1)
+    db.session.add(user1)
+    db.session.commit()
+    app.run(host='0.0.0.0',port=8080,debug=True)

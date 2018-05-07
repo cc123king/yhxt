@@ -21,5 +21,5 @@ class query_model_form(FlaskForm):
 
 class file_model(FlaskForm):
     title=StringField('标题：',validators=[DataRequired()])
-    file_area=TextAreaField('正文：',validators=[DataRequired()])
+    file_area=TextAreaField('正文：',validators=[DataRequired()],render_kw={'rows':"20"})
     submit=SubmitField('提交')

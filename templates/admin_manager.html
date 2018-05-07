@@ -1,0 +1,47 @@
+{% block header %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="{{url_for('static',filename='css/stylesheet.css')  }}" rel="stylesheet ">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>manager</title>
+</head>
+{% endblock %}
+<body>
+{% block head %}
+<div class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <div class="navbar-toggle" data-toggle="collapse" data-target="navbar-collapse">
+                   <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </div>
+            <a class="navbar-brand" href="/">后台管理系统</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active navbar-right"><a href="#">a</a></li>
+                <li><a href="#">b</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+
+{% endblock %}
+{% block footer %}
+
+{% endblock %}
+
+</body>
+</html>
