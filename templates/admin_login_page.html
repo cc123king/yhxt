@@ -2,12 +2,21 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-<div class="container" id="app1" role="form">
-    <label><b>user:</b></label><input type="text" name="users" v-model="user.users" placeholder="用户名：" /><br>
-    <label><b>password:</b></label><input type="password" v-model="user.password" /><br>
-    <button id="adminsubmit" class="btn btn-info" @click="login">sign in</button>
+    <style>
+    body{
+        background-image: url("{{ url_for('static',filename='picture/yzm.jpg') }}");
+    }
+    </style>
+<div class="panel-default">
+<div class="panel-heading bg-primary" style="width: 30%;margin: auto auto;margin-top: 15%">
+<h3 class="panel-title">登录</h3>
 </div>
-
+<div class="container bg-success text-center panel-body" style="width: 30%" id="app1" role="form">
+    <label class="text-right" style="width: 100px"><b>user:</b></label><input type="text" name="users" v-model="user.users" placeholder="用户名：" /><br>
+    <label class="text-right" style="width: 100px"><b>password:</b></label><input type="password" v-model="user.password" /><br>
+    <button id="adminsubmit" class="btn btn-info" style="margin-top: 3%" @click="login">sign in</button>
+</div>
+</div>
 <script>
     //$(document).ready(function () {
       //  alert('adsfghg');

@@ -20,7 +20,8 @@ class role(db.Model):
 
 class text(db.Model):
     __tablename__='texts'
-    title=db.Column(db.String(28),primary_key=True)
+    id=db.Column(db.Integer,primary_key=True,autoincrement=True)
+    title=db.Column(db.String(28))
     text=db.Column(db.Text)
 
 class user(db.Model):
@@ -44,6 +45,11 @@ def login():
         password=request.form.get('password')
         register.register(username,password,2)
         return '注册成功'
+@app.route('/delete_news/<int:id>',methods=['DELETE'])
+def del_noews(id):
+    db.session.query(text).filter_by(id=id).delete()
+    db.session.commit()
+    return 'OK'
 @app.route('/login.html',methods=['POST','Get'])
 def login2():
     form1=login_form()
@@ -117,6 +123,7 @@ def edit():
         title=request.form.get('title')
         file=request.form.get('file_area')
         #print(file)
+        print(title)
         edits(title,file)
         return render_template('index.html')
 @app.route('/data_colection.html')
@@ -139,14 +146,27 @@ def admin_login():
         return render_template('admin_login_page.html')
     else:
         users=request.form.get('users')
-        print(users)
-        return 'OK'
+        password0=request.form.get('password')
+        si =user.query.filter_by(name=users).first()
+        if si !=None:
+            if si.password==password0:
+                return 'OK'
+            else:
+                return "密码错误"
+        else:
+            return '用户名不存在'
 @app.route('/search_page',methods=['POST','GET'])
 def search_page():
     return render_template('search.html')
 @app.route('/admin')
 def admin():
-    return render_template('admin_manager.html')
+    title=[]
+    list=db.session.query(text).filter().all()
+    for item in list:
+        print(item.title)
+        #print(item.update)
+        title.append(item)
+    return render_template('admin_manager.html',title=title)
 if __name__ == '__main__':
     db.drop_all()
     db.create_all()
